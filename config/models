@@ -2,6 +2,11 @@ User
     ident Text
     password Text Maybe
     UniqueUser ident
-    deriving Typeable
+    deriving Typeable Show
+
+Entry
+    title Text
+    content Markdown
+    posted UTCTime default=CURRENT_TIMESTAMP
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
