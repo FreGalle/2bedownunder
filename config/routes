@@ -5,4 +5,5 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
+/blog/#EntryId EntryR GET POST
 /new AdminR GET POST
