@@ -23,8 +23,8 @@ entryForm = renderDivs $ Entry
     <*> areq markdownField "Content" Nothing
     <*> lift (liftIO getCurrentTime)
 
-imageForm :: Form (FileInfo, Maybe Textarea, UTCTime)
+imageForm :: Form (FileInfo, Maybe Text, UTCTime)
 imageForm = renderDivs $ (,,)
     <$> fileAFormReq "Image file"
-    <*> aopt textareaField "Image description" Nothing
+    <*> aopt textField "Image description" Nothing
     <*> lift (liftIO getCurrentTime)
