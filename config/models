@@ -12,7 +12,8 @@ Entry
 Image
     filename Text
     description Text Maybe
-    date UTCTime default=CURRENT_TIMESTAMP
+    date Day default=CURRENT_DATE
+    visible Bool default=True
     deriving Show
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

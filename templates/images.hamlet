@@ -1,10 +1,10 @@
 <div .container>
     <div .row>
         <h2>
-            Upload new image
+            Upload more images
         <div .form-actions>
             <form method=post enctype=#{enctype}>
-                ^{widget}
+                <input name=#{imagesName} type=file accept=image/* multiple>
                 <input .btn type=submit value="Upload">
         $if not $ null images
             <table .table>
@@ -16,6 +16,8 @@
                     <th>
                         Uploaded
                     <th>
+                        Overview
+                    <th>
                         Action
                 $forall Entity imageId image <- images
                     <tr>
@@ -24,9 +26,13 @@
                                 #{imageFilename image}
                         <td>
                             $maybe description <- imageDescription image
-                                #{description}
+                                <input name=description type=text value=#{description}>
+                            $nothing
+                                <input name=description type=text>
                         <td>
                             #{show $ imageDate image}
+                        <td>
+                            <input type=checkbox name=visible :imageVisible image:checked>
                         <td>
                             <!--<a href=# .delete data-img-url=@{ImageR imageId}>
                                 delete-->
