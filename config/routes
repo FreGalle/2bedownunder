@@ -2,8 +2,8 @@
 /auth   AuthR   Auth   getAuth
 
 /favicon.ico FaviconR GET
-/robots.txt RobotsR GET
+/robots.txt  RobotsR  GET
 
-/ HomeR GET POST
+/              HomeR  GET POST
 /blog/#EntryId EntryR GET POST
-/new AdminR GET POST
+/new           AdminR GET POST
