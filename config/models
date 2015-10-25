@@ -9,4 +9,10 @@ Entry
     content Markdown
     posted UTCTime default=CURRENT_TIMESTAMP
 
+Image
+    filename Text
+    description Textarea Maybe
+    date UTCTime default=CURRENT_TIMESTAMP
+    deriving Show
+
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

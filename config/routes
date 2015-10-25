@@ -4,6 +4,7 @@
 /favicon.ico FaviconR GET
 /robots.txt  RobotsR  GET
 
-/              HomeR  GET POST
-/blog/#EntryId EntryR GET POST
-/new           AdminR GET POST
+/                    HomeR   GET POST
+/blog/posts/#EntryId EntryR  GET POST
+/blog/new            AdminR  GET POST
+/blog/images         ImagesR GET POST

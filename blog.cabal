@@ -24,6 +24,7 @@ library
                      Handler.Home
                      Handler.Admin
                      Handler.Entry
+                     Handler.Images
     other-modules:   Handler.Form
 
     if flag(dev) || flag(library-only)
