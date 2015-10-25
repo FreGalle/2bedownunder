@@ -20,6 +20,7 @@ data App = App
     , appConnPool    :: ConnectionPool -- ^ Database connection pool.
     , appHttpManager :: Manager
     , appLogger      :: Logger
+    , appImages      :: Static -- ^ Settings for image file serving.
     }
 
 instance HasHttpManager App where

@@ -20,7 +20,7 @@
                 $forall Entity imageId image <- images
                     <tr>
                         <td>
-                            <a href=#{imageFilePath $ imageFilename image}>
+                            <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
                                 #{imageFilename image}
                         <td>
                             $maybe description <- imageDescription image

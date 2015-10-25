@@ -2,6 +2,7 @@
 # See https://github.com/yesodweb/yesod/wiki/Configuration#overriding-configuration-values-with-environment-variables
 
 static-dir:     "_env:STATIC_DIR:static"
+images-dir:     "_env:IMAGES_DIR:images"
 host:           "_env:HOST:*4" # any IPv4 host
 port:           "_env:PORT:3000"
 approot:        "_env:APPROOT:http://localhost:3000"
