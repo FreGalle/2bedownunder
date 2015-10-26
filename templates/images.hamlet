@@ -7,7 +7,7 @@
                 <input name=#{imagesName} type=file accept=image/* multiple>
                 <input .btn type=submit value="Upload">
         $if not $ null images
-            <table .table>
+            <table #list .table>
                 <tr>
                     <th>
                         Image
@@ -18,7 +18,7 @@
                     <th>
                         Overview
                     <th>
-                        Action
+                        Delete
                 $forall Entity imageId image <- images
                     <tr>
                         <td>
@@ -34,5 +34,5 @@
                         <td>
                             <input type=checkbox name=visible :imageVisible image:checked>
                         <td>
-                            <!--<a href=# .delete data-img-url=@{ImageR imageId}>
-                                delete-->
+                            <a href=# .delete data-url=@{BlogImageR imageId}>
+                                delete

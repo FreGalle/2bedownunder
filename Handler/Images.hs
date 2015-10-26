@@ -1,10 +1,12 @@
 module Handler.Images
     ( getBlogImagesR
     , postBlogImagesR
+    , putBlogImageR
+    , deleteBlogImageR
     ) where
 
 import Import
-import System.Directory (doesFileExist)
+import System.Directory (doesFileExist, removeFile)
 
 -- GET Handler for main images page
 getBlogImagesR :: Handler Html
@@ -23,6 +25,26 @@ postBlogImagesR = do
     setMessage $ toHtml $ "new images saved: " ++ show (length ids')
     --setMessage $ (pack . show $ length ids') ++ "new images saved"
     redirect BlogImagesR
+
+putBlogImageR :: ImageId -> Handler ()
+putBlogImageR imageId = undefined
+
+deleteBlogImageR :: ImageId -> Handler ()
+deleteBlogImageR imageId = do
+    image <- runDB $ get404 imageId
+    let filename = imageFilename image
+    path <- imageFilePath filename
+    -- Remove file from disk
+    liftIO $ removeFile path
+    -- Check if file has been successfully deleted
+    stillExists <- liftIO $ doesFileExist path
+    if not stillExists
+        then do
+            runDB $ delete imageId
+            setMessage "Image has been deleted"
+            redirect BlogImagesR
+        else
+            redirect BlogImagesR
 
 saveFile :: FileInfo -> Handler (Maybe (Key Image))
 saveFile info = do
