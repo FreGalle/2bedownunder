@@ -26,6 +26,8 @@ data AppSettings = AppSettings
     -- ^ Directory from which to serve static files.
     , appImagesDir              :: String
     -- ^ Directory from which to serve image files
+    , appThumbsDir              :: String
+    -- ^ Directory from which to serve thumbnail files
     , appDatabaseConf           :: PostgresConf
     -- ^ Configuration settings for accessing the database.
     , appRoot                   :: Text
@@ -64,6 +66,7 @@ instance FromJSON AppSettings where
 #endif
         appStaticDir              <- o .: "static-dir"
         appImagesDir              <- o .: "images-dir"
+        appThumbsDir              <- o .: "thumbs-dir"
         appDatabaseConf           <- o .: "database"
         appRoot                   <- o .: "approot"
         appHost                   <- fromString <$> o .: "host"

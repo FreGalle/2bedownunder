@@ -23,12 +23,12 @@
                     <tr>
                         <td>
                             <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
-                                #{imageFilename image}
+                                <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
                         <td>
                             $maybe description <- imageDescription image
-                                <input name=description type=text value=#{description}>
+                                <textarea name=description cols=70 rows=2 value=#{description}>
                             $nothing
-                                <input name=description type=text>
+                                <textarea name=description cols=70 rows=2>
                         <td>
                             #{show $ imageDate image}
                         <td>

@@ -11,7 +11,8 @@ Entry
 
 Image
     filename Text
-    description Text Maybe
+    thumbFilename Text
+    description Textarea Maybe
     date Day default=CURRENT_DATE
     visible Bool default=True
     deriving Show
