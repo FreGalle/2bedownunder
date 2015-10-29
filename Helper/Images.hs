@@ -1,6 +1,7 @@
-module Handler.Thumbnail where
+module Helper.Images where
 
 import Import
+
 import System.Directory             (getTemporaryDirectory, removeFile)
 import Control.Monad.Trans.Resource (register)
 import Yesod.Core.Types             (FileInfo (fileSourceRaw))

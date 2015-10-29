@@ -5,9 +5,9 @@ module Handler.Images
     , deleteBlogImageR
     ) where
 
-import Handler.Thumbnail (toThumbnail)
-
 import Import
+import Helper.Images
+
 import System.FilePath (splitExtensions, takeFileName)
 import System.Directory (doesFileExist, removeFile)
 
