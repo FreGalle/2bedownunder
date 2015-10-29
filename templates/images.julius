@@ -4,7 +4,7 @@ function confirmDelete(link) {
     };
 }
 
-function refreshPage() {
+function refreshPage(httpRequest) {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
             document.location.reload();
@@ -15,7 +15,7 @@ function refreshPage() {
 function deleteImage(link) {
 
     var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = refreshPage;
+    httpRequest.onreadystatechange = refreshPage.bind(this, httpRequest);
 
     httpRequest.open('DELETE', link.dataset.url);
     httpRequest.send();
@@ -31,7 +31,7 @@ function updateImage(link) {
     };
 
     var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = refreshPage;
+    httpRequest.onreadystatechange = refreshPage.bind(this, httpRequest);
 
     httpRequest.open('PUT', link.dataset.url);
     httpRequest.setRequestHeader('Content-Type', 'application/json');

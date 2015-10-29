@@ -14,7 +14,7 @@ import System.Directory (doesFileExist, removeFile)
 -- GET Handler for main images page
 getBlogImagesR :: Handler Html
 getBlogImagesR = do
-    images <- runDB $ selectList [] [Desc ImageDate]
+    images <- runDB $ selectList [] [Desc ImageUploaded]
     defaultLayout $(widgetFile "images")
     where
         rowWidget :: ImageId -> Image -> Widget
@@ -26,17 +26,18 @@ getBlogImagesR = do
 
 -- POST Handler for main images page
 -- Used when uploading more images
-postBlogImagesR :: Handler Html
+postBlogImagesR :: Handler ()
 postBlogImagesR = do
     files <- lookupFiles imagesName
     ids <- forM files saveFile
     let ids' = catMaybes ids
     setMessage $ toHtml $ "new images saved: " ++ show (length ids')
-    redirect BlogImagesR
 
 putBlogImageR :: ImageId -> Handler ()
 putBlogImageR imageId = do
-    redirect BlogImagesR
+    ImageUpdate {..} <- requireJsonBody :: Handler ImageUpdate
+    runDB $ update imageId [ImageDescription =. description, ImageVisible =. visible]
+    setMessage "Image successfully updated"
 
 -- DELETE Handler for one image at a time
 deleteBlogImageR :: ImageId -> Handler ()
@@ -48,31 +49,27 @@ deleteBlogImageR imageId = do
         removeFile thumbPath
     runDB $ delete imageId
     setMessage "Image has been deleted"
-    redirect BlogImagesR
 
 saveFile :: FileInfo -> Handler (Maybe (Key Image))
 saveFile info = do
     (filePath, thumbPath) <- getPaths $ fileName info
     thumbnail <- toThumbnail info
     fileExists <- liftIO $ do
-        fileMove thumbnail thumbPath
         -- Save file to disk if it doesn't exist yet
         exists <- doesFileExist filePath
         unless exists $ fileMove info filePath
-
         return exists
 
     if fileExists
         then return Nothing
         else do
             -- Save thumbnail to disk
-            --thumbnail <- toThumbnail info
-            --liftIO $ fileMove thumbnail thumbPath
+            liftIO $ fileMove thumbnail thumbPath
             -- Persist new Image entity
-            day <- liftIO $ fmap utctDay getCurrentTime
+            uploaded <- liftIO getCurrentTime
             let file  = fileName info
                 thumb = pack $ takeFileName thumbPath
-            imgId <- runDB $ insert (Image file thumb Nothing day True)
+            imgId <- runDB $ insert (Image file thumb Nothing uploaded True)
             return (Just imgId)
 
 getPaths :: Text -> Handler (FilePath, FilePath)

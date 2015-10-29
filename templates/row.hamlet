@@ -3,12 +3,11 @@
         <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
             <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
     <td>
-        #{show $ imageDate image}
+        #{formatTime defaultTimeLocale "%e %b %0Y" $ imageUploaded image}
     <td>
-        $maybe description <- imageDescription image
-            <textarea name=description cols=70 rows=3 value=#{description} data-image=#{ident}>
-        $nothing
-            <textarea name=description cols=70 rows=3 data-image=#{ident}>
+        <textarea name=description cols=70 rows=3 data-image=#{ident}>
+            $maybe description <- imageDescription image
+                #{description}
     <td>
         <input type=checkbox name=visible :imageVisible image:checked data-image=#{ident}>
     <td>
