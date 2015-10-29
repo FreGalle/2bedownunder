@@ -3,7 +3,7 @@
         <h2>
             Upload more images
         <div .form-actions>
-            <form method=post enctype=#{enctype}>
+            <form method=post enctype=#{Multipart}>
                 <input name=#{imagesName} type=file accept=image/* multiple>
                 <input .btn type=submit value="Upload">
         $if not $ null images
@@ -12,27 +12,14 @@
                     <th>
                         Image
                     <th>
-                        Decription
-                    <th>
                         Uploaded
+                    <th>
+                        Decription
                     <th>
                         Overview
                     <th>
+                        Update
+                    <th>
                         Delete
                 $forall Entity imageId image <- images
-                    <tr>
-                        <td>
-                            <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
-                                <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
-                        <td>
-                            $maybe description <- imageDescription image
-                                <textarea name=description cols=70 rows=2 value=#{description}>
-                            $nothing
-                                <textarea name=description cols=70 rows=2>
-                        <td>
-                            #{show $ imageDate image}
-                        <td>
-                            <input type=checkbox name=visible :imageVisible image:checked>
-                        <td>
-                            <a href=# .delete data-url=@{BlogImageR imageId}>
-                                delete
+                    ^{rowWidget imageId image}

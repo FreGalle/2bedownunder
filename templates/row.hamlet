@@ -1,0 +1,19 @@
+<tr>
+    <td>
+        <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
+            <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
+    <td>
+        #{show $ imageDate image}
+    <td>
+        $maybe description <- imageDescription image
+            <textarea name=description cols=70 rows=3 value=#{description} data-image=#{ident}>
+        $nothing
+            <textarea name=description cols=70 rows=3 data-image=#{ident}>
+    <td>
+        <input type=checkbox name=visible :imageVisible image:checked data-image=#{ident}>
+    <td>
+        <a href=# .update data-url=@{BlogImageR imageId} data-image=#{ident}>
+            update
+    <td>
+        <a href=# .delete data-url=@{BlogImageR imageId}>
+            delete

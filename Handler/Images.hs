@@ -14,10 +14,15 @@ import System.Directory (doesFileExist, removeFile)
 -- GET Handler for main images page
 getBlogImagesR :: Handler Html
 getBlogImagesR = do
-    let enctype = Multipart
-    thumbsDir <- appThumbsDir <$> getsYesod appSettings
     images <- runDB $ selectList [] [Desc ImageDate]
     defaultLayout $(widgetFile "images")
+    where
+        rowWidget :: ImageId -> Image -> Widget
+        rowWidget imageId image = do
+            thumbsDir <- appThumbsDir <$> getsYesod appSettings
+            ident <- newIdent
+            $(widgetFile "row")
+
 
 -- POST Handler for main images page
 -- Used when uploading more images
@@ -30,7 +35,8 @@ postBlogImagesR = do
     redirect BlogImagesR
 
 putBlogImageR :: ImageId -> Handler ()
-putBlogImageR imageId = undefined
+putBlogImageR imageId = do
+    redirect BlogImagesR
 
 -- DELETE Handler for one image at a time
 deleteBlogImageR :: ImageId -> Handler ()
