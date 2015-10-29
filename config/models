@@ -6,6 +6,7 @@ User
 
 Entry
     title Text
+    published Bool default=False
     content Markdown
     posted UTCTime default=CURRENT_TIMESTAMP
 

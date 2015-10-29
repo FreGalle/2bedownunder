@@ -25,8 +25,7 @@ library
                      Handler.Admin
                      Handler.Entry
                      Handler.Images
-    other-modules:   Handler.Form
-                     Handler.Thumbnail
+    other-modules:   Handler.Thumbnail
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
