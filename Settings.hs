@@ -22,11 +22,11 @@ import Yesod.Default.Util          (WidgetFileSettings, widgetFileNoReload,
 -- loaded from various sources: defaults, environment variables, config files,
 -- theoretically even a database.
 data AppSettings = AppSettings
-    { appStaticDir              :: String
+    { appStaticDir              :: FilePath
     -- ^ Directory from which to serve static files.
-    , appImagesDir              :: String
+    , appImagesDir              :: FilePath
     -- ^ Directory from which to serve image files
-    , appThumbsDir              :: String
+    , appThumbsDir              :: FilePath
     -- ^ Directory from which to serve thumbnail files
     , appDatabaseConf           :: PostgresConf
     -- ^ Configuration settings for accessing the database.

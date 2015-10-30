@@ -8,8 +8,7 @@ module Handler.Images
 import Import
 import Helper.Images
 
-import System.FilePath (splitExtensions, takeFileName)
-import System.Directory (doesFileExist, removeFile)
+import System.Directory (removeFile)
 
 -- GET Handler for main images page
 getBlogImagesR :: Handler Html
@@ -23,15 +22,15 @@ getBlogImagesR = do
             ident <- newIdent
             $(widgetFile "row")
 
-
 -- POST Handler for main images page
 -- Used when uploading more images
 postBlogImagesR :: Handler ()
 postBlogImagesR = do
     files <- lookupFiles imagesName
-    ids <- forM files saveFile
+    ids <- forM files saveImg
     let ids' = catMaybes ids
     setMessage $ toHtml $ "new images saved: " ++ show (length ids')
+    redirect BlogImagesR
 
 putBlogImageR :: ImageId -> Handler ()
 putBlogImageR imageId = do
@@ -43,47 +42,12 @@ putBlogImageR imageId = do
 deleteBlogImageR :: ImageId -> Handler ()
 deleteBlogImageR imageId = do
     image <- runDB $ get404 imageId
-    (filePath, thumbPath) <- getPaths $ imageFilename image
+    (imagePath, thumbPath) <- (,) <$> imageFp image <*> thumbFp image
     liftIO $ do
-        removeFile filePath
+        removeFile imagePath
         removeFile thumbPath
     runDB $ delete imageId
     setMessage "Image has been deleted"
-
-saveFile :: FileInfo -> Handler (Maybe (Key Image))
-saveFile info = do
-    (filePath, thumbPath) <- getPaths $ fileName info
-    thumbnail <- toThumbnail info
-    fileExists <- liftIO $ do
-        -- Save file to disk if it doesn't exist yet
-        exists <- doesFileExist filePath
-        unless exists $ fileMove info filePath
-        return exists
-
-    if fileExists
-        then return Nothing
-        else do
-            -- Save thumbnail to disk
-            liftIO $ fileMove thumbnail thumbPath
-            -- Persist new Image entity
-            uploaded <- liftIO getCurrentTime
-            let file  = fileName info
-                thumb = pack $ takeFileName thumbPath
-            imgId <- runDB $ insert (Image file thumb Nothing uploaded True)
-            return (Just imgId)
-
-getPaths :: Text -> Handler (FilePath, FilePath)
-getPaths filename = do
-    AppSettings {..} <- getsYesod appSettings
-    let file   = unpack filename
-        file'  = appImagesDir </> file
-        thumb  = imageThumb file
-        thumb' = appImagesDir </> appThumbsDir </> thumb
-    return (file',thumb')
-
-imageThumb :: FilePath -> FilePath
-imageThumb file = name ++ "_thumb" <.> ext
-    where (name,ext) = splitExtensions file
 
 -- Name used to upload image files as in the form
 imagesName :: Text
