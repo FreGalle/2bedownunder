@@ -109,8 +109,9 @@ instance Yesod App where
     makeLogger = return . appLogger
 
     -- Increase maximum content length for file upload page
-    maximumContentLength _ (Just route)
-        | route == AdminR || route == BlogImagesR = Nothing
+    maximumContentLength _ (Just AdminImagesR)    = Nothing
+    maximumContentLength _ (Just AdminNewEntryR)  = Nothing
+    maximumContentLength _ (Just (AdminEntryR _)) = Nothing
     maximumContentLength _ _ = Just (2 * 1024 * 1024) -- 2 megabytes
 
 -- How to run database actions.

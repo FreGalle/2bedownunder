@@ -11,8 +11,8 @@
     <td>
         <input type=checkbox name=visible :imageVisible image:checked data-image=#{ident}>
     <td>
-        <a href=# .update data-url=@{BlogImageR imageId} data-image=#{ident}>
+        <a href=# .update data-url=@{AdminImageR imageId} data-image=#{ident}>
             update
     <td>
-        <a href=# .delete data-url=@{BlogImageR imageId}>
+        <a href=# .delete data-url=@{AdminImageR imageId}>
             delete

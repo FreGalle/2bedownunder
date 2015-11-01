@@ -1,4 +1,4 @@
-module Helper.Images
+module Helper.Image
     ( saveImg
     , imageFp
     , thumbFp ) where
