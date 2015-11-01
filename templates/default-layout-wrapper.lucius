@@ -1,0 +1,15 @@
+table {
+    margin-bottom: 20px;
+    width: 100%;
+
+    > tbody > tr > th,
+    > tbody > tr > td {
+        border-top: 1px solid #ddd;
+        padding: 0.5em;
+        vertical-align: top;
+    }
+
+    > tbody > tr > th {
+        text-align: left;
+    }
+}
