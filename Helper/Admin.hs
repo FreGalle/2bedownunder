@@ -2,16 +2,16 @@ module Helper.Admin where
 
 import Import
 
+import Text.Markdown (Markdown)
 import Yesod.Text.Markdown (markdownField)
 
-entryForm :: Maybe Entry -> Form Entry
-entryForm mEntry = renderDivs $ Entry
-    <$> areq textField titleSettings         (entryTitle <$> mEntry)
-    <*> areq checkBoxField publishedSettings (entryPublished <$> mEntry)
-    <*> areq markdownField contentSettings   (entryContent <$> mEntry)
-    <*> lift (liftIO getCurrentTime)
+entryForm :: Maybe Entry -> Form (Text, Bool, Markdown)
+entryForm mEntry = renderDivs $ (,,)
+    <$> areq textField titleSettings (entryTitle <$> mEntry)
+    <*> areq checkBoxField publishNowSettings (Just (isJust (entryPosted <$> mEntry)))
+    <*> areq markdownField contentSettings (entryContent <$> mEntry)
 
-titleSettings, publishedSettings, contentSettings :: FieldSettings App
+titleSettings, publishNowSettings, contentSettings :: FieldSettings App
 titleSettings = FieldSettings
     { fsLabel = "Title"
     , fsTooltip = Nothing
@@ -19,11 +19,11 @@ titleSettings = FieldSettings
     , fsName = Just "title"
     , fsAttrs = []
     }
-publishedSettings = FieldSettings
-    { fsLabel = "Published"
+publishNowSettings = FieldSettings
+    { fsLabel = "Post immediately"
     , fsTooltip = Nothing
-    , fsId = Just "published"
-    , fsName = Just "published"
+    , fsId = Just "posted"
+    , fsName = Just "posted"
     , fsAttrs = []
     }
 contentSettings = FieldSettings

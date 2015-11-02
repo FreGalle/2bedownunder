@@ -10,13 +10,7 @@ getAdminImagesR :: Handler Html
 getAdminImagesR = do
     images <- runDB $ selectList [] [Desc ImageUploaded]
     defaultLayout $(widgetFile "admin-images")
-    where
-        rowWidget :: ImageId -> Image -> Widget
-        rowWidget imageId image = do
-            thumbsDir <- appThumbsDir <$> getsYesod appSettings
-            ident <- newIdent
-            $(widgetFile "admin-images-row")
-
+    
 -- POST Handler for main images page
 -- Used when uploading more images
 postAdminImagesR :: Handler ()
@@ -47,3 +41,9 @@ deleteAdminImageR imageId = do
 -- Name used to upload image files as in the form
 imagesName :: Text
 imagesName = "images"
+
+rowWidget :: ImageId -> Image -> Widget
+rowWidget imageId image = do
+    thumbsDir <- appThumbsDir <$> getsYesod appSettings
+    ident <- newIdent
+    $(widgetFile "admin-images-row")
