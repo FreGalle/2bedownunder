@@ -5,10 +5,10 @@ import Import
 import Text.Markdown (Markdown)
 import Yesod.Text.Markdown (markdownField)
 
-entryForm :: Maybe Entry -> Form (Text, Bool, Markdown)
-entryForm mEntry = renderDivs $ (,,)
+newEntryForm :: Maybe Entry -> Form (Text, Bool, Markdown)
+newEntryForm mEntry = renderDivs $ (,,)
     <$> areq textField titleSettings (entryTitle <$> mEntry)
-    <*> areq checkBoxField publishNowSettings (Just (isJust (entryPosted <$> mEntry)))
+    <*> areq checkBoxField publishNowSettings (fmap (isJust . entryPosted) mEntry)
     <*> areq markdownField contentSettings (entryContent <$> mEntry)
 
 titleSettings, publishNowSettings, contentSettings :: FieldSettings App

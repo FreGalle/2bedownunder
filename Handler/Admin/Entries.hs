@@ -6,18 +6,18 @@ import Helper.Admin
 getAdminEntriesR :: Handler Html
 getAdminEntriesR = do
     now <- liftIO getCurrentTime
-    published   <- runDB $ selectList [EntryPosted <=. Just now]  []
+    published   <- runDB $ selectList [EntryPosted <=. Just now]  [Desc EntryPosted]
     unpublished <- runDB $ selectList ([EntryPosted >=. Just now] ||. [EntryPosted ==. Nothing]) []
     defaultLayout $(widgetFile "admin-entries")
 
 getAdminNewEntryR :: Handler Html
 getAdminNewEntryR = do
-    (entryWidget, enctype) <- generateFormPost $ entryForm Nothing
+    (entryWidget, enctype) <- generateFormPost $ newEntryForm Nothing
     defaultLayout $(widgetFile "admin-entry")
 
 postAdminNewEntryR :: Handler Html
 postAdminNewEntryR = do
-    ((res, entryWidget), enctype) <- runFormPost $ entryForm Nothing
+    ((res, entryWidget), enctype) <- runFormPost $ newEntryForm Nothing
     case res of
         FormSuccess (title, posted, content) -> do
             now <- liftIO getCurrentTime
@@ -26,7 +26,10 @@ postAdminNewEntryR = do
         _ -> defaultLayout $(widgetFile "admin-entry")
 
 getAdminEntryR :: EntryId -> Handler Html
-getAdminEntryR entryId = undefined
+getAdminEntryR entryId = do
+    entry <- runDB $ get404 entryId
+    (entryWidget, enctype) <- generateFormPost $ newEntryForm $ Just entry
+    defaultLayout $(widgetFile "admin-entry")
 
 putAdminEntryR :: EntryId -> Handler ()
 putAdminEntryR entryId = undefined

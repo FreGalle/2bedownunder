@@ -1,6 +1,8 @@
+<div>
+    <a href=@{AdminNewEntryR}>Create new post
 <div #unpublished>
     $if not $ null unpublished
-        <h3>Unpublished - #{length unpublished}
+        <h4>Unpublished Posts
         $forall Entity entryId entry <- unpublished
             <div .post>
                 <a href=@{AdminEntryR entryId} .title>#{entryTitle entry}
@@ -8,7 +10,7 @@
 
 <div #published>
     $if not $ null published
-        <h3>Published - #{length published}
+        <h4>Published Posts
         $forall Entity entryId entry <- published
             <div .post>
                 <a href=@{AdminEntryR entryId} .title>#{entryTitle entry}
