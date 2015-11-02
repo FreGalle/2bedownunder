@@ -7,7 +7,7 @@ getAdminEntriesR :: Handler Html
 getAdminEntriesR = do
     now <- liftIO getCurrentTime
     published   <- runDB $ selectList [EntryPosted <=. Just now]  [Desc EntryPosted]
-    unpublished <- runDB $ selectList ([EntryPosted >=. Just now] ||. [EntryPosted ==. Nothing]) []
+    unpublished <- runDB $ selectList ([EntryPosted >=. Just now] ||. [EntryPosted ==. Nothing]) [Desc EntryCreated]
     defaultLayout $(widgetFile "admin-entries")
 
 getAdminNewEntryR :: Handler Html
@@ -19,9 +19,11 @@ postAdminNewEntryR :: Handler Html
 postAdminNewEntryR = do
     ((res, entryWidget), enctype) <- runFormPost $ newEntryForm Nothing
     case res of
-        FormSuccess (title, posted, content) -> do
+        FormSuccess (title, postNow, content) -> do
             now <- liftIO getCurrentTime
-            entryId <- runDB $ insert $ Entry title content (if posted then Just now else Nothing)
+            let postTime   = if postNow then Just now else Nothing
+                createTime = now
+            entryId <- runDB $ insert $ Entry title content postTime createTime
             redirect $ BlogEntryR entryId
         _ -> defaultLayout $(widgetFile "admin-entry")
 

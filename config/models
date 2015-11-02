@@ -8,6 +8,7 @@ Entry
     title Text
     content Markdown
     posted UTCTime Maybe
+    created UTCTime default=CURRENT_TIMESTAMP
 
 Image
     filename Text
