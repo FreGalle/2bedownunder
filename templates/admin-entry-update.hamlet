@@ -1,6 +1,9 @@
 <div #wrapper>
-<form #form enctype=#{enctype}>
-    ^{entryWidget}
-    <div>
-        <button #update type=button>Update
-        <button #delete type=button>Delete
+    <form #form enctype=#{enctype}>
+        ^{entryWidget}
+        <div>
+            <button #update type=button>Update
+            <button #delete type=button>Delete
+    <div #images>
+        $forall Entity imageId image <- images
+            <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>

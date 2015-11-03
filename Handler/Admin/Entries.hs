@@ -41,6 +41,8 @@ postAdminNewEntryR = do
 getAdminEntryR :: EntryId -> Handler Html
 getAdminEntryR entryId = do
     entry <- runDB $ get404 entryId
+    images <- runDB $ selectList [] [Desc ImageUploaded]
+    thumbsDir <- appThumbsDir <$> getsYesod appSettings
     (entryWidget, enctype) <- generateFormPost $ mUpdateEntryForm $ Just entry
     adminLayout $(widgetFile "admin-entry-update")
 

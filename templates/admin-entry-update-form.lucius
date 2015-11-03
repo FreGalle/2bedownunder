@@ -10,16 +10,16 @@
 
 ##{fvId dayView} {
     line-height: 1.5em;
-    width: 10em;
+    width: 11em;
 }
 
 ##{fvId timeView} {
-    width: 6em;
+    width: 7em;
 }
 
 ##{fvId contentView} {
     font-size: 1.1em;
     height: 65vh;
-    max-width: 100%;
+    resize: vertical;
     width: 100%;
 }

@@ -1,6 +1,4 @@
 img.thumbnail {
-    max-width: 120px;
-    max-height: 120px;
     border: 1px solid #bbb;
 }
 

@@ -39,3 +39,12 @@ table {
         text-align: left;
     }
 }
+
+input, textarea {
+    box-sizing: border-box
+}
+
+img.thumbnail {
+    max-width: 120px;
+    max-height: 120px;
+}
