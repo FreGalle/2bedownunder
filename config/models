@@ -9,6 +9,7 @@ Entry
     content Markdown
     posted UTCTime Maybe
     created UTCTime default=CURRENT_TIMESTAMP
+    deriving Show
 
 Image
     filename Text

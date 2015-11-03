@@ -1,0 +1,43 @@
+function confirmDelete() {
+    if (confirm("Are you sure you want to delete this post?")) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = goToOverview.bind(this, request);
+        request.open('DELETE', '@{AdminEntryR entryId}');
+        request.send(null);
+    };
+}
+
+function updatePost() {
+    var form = document.getElementById('form');
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = refresh.bind(this, request);
+    //request.setRequestHeader('Content-Type', 'multipart/form-data');
+    request.open('PUT', '@{AdminEntryR entryId}');
+    request.send(new FormData(form));
+}
+
+function refresh(request) {
+    if (request.readyState === XMLHttpRequest.DONE) {
+        document.location = '@{AdminEntryR entryId}';
+    }
+}
+
+function goToOverview(request) {
+    if (request.readyState === XMLHttpRequest.DONE) {
+        if (request.status === 200) {
+            document.location = '@{AdminEntriesR}';
+        }
+    }
+}
+
+var delEl = document.getElementById('delete');
+delEl.addEventListener('click', function() {
+    confirmDelete();
+    return false;
+});
+
+var updateEl = document.getElementById('update');
+updateEl.addEventListener('click', function() {
+    updatePost();
+    return false;
+});

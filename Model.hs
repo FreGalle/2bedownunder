@@ -5,6 +5,7 @@ import Database.Persist.Quasi
 import Text.Markdown (Markdown)
 import Yesod.Text.Markdown ()
 import Data.Aeson.TH (deriveJSON, defaultOptions)
+import Data.Time.Clock (diffUTCTime)
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
@@ -18,3 +19,12 @@ data ImageUpdate = ImageUpdate
     , description :: Maybe Textarea
     }
 $(deriveJSON defaultOptions ''ImageUpdate)
+
+isPublishedNow :: MonadIO m => Maybe UTCTime -> m Bool
+isPublishedNow published = case published of
+    Nothing -> return False
+    Just publishAt -> do
+        now <- liftIO getCurrentTime
+        let diff = diffUTCTime now publishAt
+            hasBeenPublished = negate diff < diff
+        return hasBeenPublished

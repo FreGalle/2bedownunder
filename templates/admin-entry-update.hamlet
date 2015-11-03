@@ -1,0 +1,5 @@
+<form #form enctype=#{enctype}>
+    ^{entryWidget}
+    <div>
+        <button #update type=button>Update
+        <button #delete type=button>Delete
