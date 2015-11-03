@@ -1,0 +1,8 @@
+<nav #topnav>
+    <a href=@{AdminEntriesR}>Posts
+    <a href=@{AdminNewEntryR}>New Post
+    \<span> | #
+    <a href=@{AdminImagesR}>Images
+$maybe msg <- mmsg
+  <div #message>#{msg}
+^{widget}

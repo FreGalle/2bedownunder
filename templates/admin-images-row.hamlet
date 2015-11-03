@@ -5,7 +5,7 @@
     <td>
         #{formatTime defaultTimeLocale "%e %b %0Y" $ imageUploaded image}
     <td>
-        <textarea name=description cols=70 rows=3 data-image=#{ident}>
+        <textarea name=description cols=60 rows=3 data-image=#{ident}>
             $maybe description <- imageDescription image
                 #{description}
     <td>

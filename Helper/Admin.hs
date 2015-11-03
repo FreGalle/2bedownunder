@@ -5,7 +5,15 @@ import Import
 import Text.Markdown (Markdown)
 import Data.Time.Calendar
 import Data.Time.LocalTime
+import Text.Hamlet (hamletFile)
 import Yesod.Text.Markdown (markdownField)
+
+adminLayout :: Widget -> Handler Html
+adminLayout widget = do
+    master <- getYesod
+    mmsg <- getMessage
+    pc <- widgetToPageContent $(widgetFile "admin-layout")
+    withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
 newEntryForm :: Form (Text, Bool, Markdown)
 newEntryForm = renderDivs $ (,,)

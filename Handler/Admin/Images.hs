@@ -3,14 +3,15 @@ module Handler.Admin.Images where
 import Import
 import System.Directory (removeFile)
 
+import Helper.Admin
 import Helper.Image
 
 -- GET Handler for main images page
 getAdminImagesR :: Handler Html
 getAdminImagesR = do
     images <- runDB $ selectList [] [Desc ImageUploaded]
-    defaultLayout $(widgetFile "admin-images")
-    
+    adminLayout $(widgetFile "admin-images")
+
 -- POST Handler for main images page
 -- Used when uploading more images
 postAdminImagesR :: Handler ()

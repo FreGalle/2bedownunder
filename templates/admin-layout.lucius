@@ -1,0 +1,42 @@
+#main {
+    font-family: 'Helvetica', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
+#topnav {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: right;
+    width: 100%;
+
+    a + a {
+        margin-left: 0.5em;
+    }
+}
+
+#message {
+    color: #dde4e9;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 0.5em;
+    text-align: center;
+    width: 100%;
+}
+
+table {
+    margin-bottom: 20px;
+    width: 100%;
+
+    > tbody > tr > th,
+    > tbody > tr > td {
+        border-top: 1px solid #ddd;
+        padding: 0.5em;
+        vertical-align: top;
+    }
+
+    > tbody > tr > th {
+        text-align: left;
+    }
+}

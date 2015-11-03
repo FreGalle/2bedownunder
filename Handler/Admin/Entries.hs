@@ -8,12 +8,12 @@ getAdminEntriesR = do
     now <- liftIO getCurrentTime
     published   <- runDB $ selectList [EntryPosted <=. Just now]  [Desc EntryPosted]
     unpublished <- runDB $ selectList ([EntryPosted >=. Just now] ||. [EntryPosted ==. Nothing]) [Desc EntryPosted, Desc EntryCreated]
-    defaultLayout $(widgetFile "admin-entries")
+    adminLayout $(widgetFile "admin-entries")
 
 getAdminNewEntryR :: Handler Html
 getAdminNewEntryR = do
     (entryWidget, enctype) <- generateFormPost newEntryForm
-    defaultLayout $(widgetFile "admin-entry-new")
+    adminLayout $(widgetFile "admin-entry-new")
 
 postAdminNewEntryR :: Handler Html
 postAdminNewEntryR = do
@@ -36,13 +36,13 @@ postAdminNewEntryR = do
                     setMessage "Post created but not yet published"
                     redirect $ AdminEntriesR
 
-        _ -> defaultLayout $(widgetFile "admin-entry-new")
+        _ -> adminLayout $(widgetFile "admin-entry-new")
 
 getAdminEntryR :: EntryId -> Handler Html
 getAdminEntryR entryId = do
     entry <- runDB $ get404 entryId
     (entryWidget, enctype) <- generateFormPost $ mUpdateEntryForm $ Just entry
-    defaultLayout $(widgetFile "admin-entry-update")
+    adminLayout $(widgetFile "admin-entry-update")
 
 putAdminEntryR :: EntryId -> Handler ()
 putAdminEntryR entryId = do
