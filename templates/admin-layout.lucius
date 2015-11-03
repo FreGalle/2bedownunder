@@ -1,5 +1,5 @@
 #main {
-    font-family: 'Helvetica', sans-serif;
+    font-family: Verdana, Geneva, sans-serif;
     margin-left: auto;
     margin-right: auto;
     width: 960px;
@@ -17,7 +17,6 @@
 }
 
 #message {
-    color: #dde4e9;
     margin-bottom: 1em;
     margin-top: 1em;
     padding: 0.5em;

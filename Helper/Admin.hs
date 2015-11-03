@@ -52,28 +52,7 @@ mUpdateEntryForm mEntry _ = do
             _ -> FormFailure ["This should not happen"]
         created = FormSuccess (maybe now entryCreated mEntry)
         res = Entry <$> titleRes <*> contentRes <*> posted <*> created
-        widget = do
-            toWidget
-                [lucius|
-                    ##{fvId dayView} {
-                        width: 10em;
-                    }
-                    ##{fvId timeView} {
-                        width: 6em;
-                    }
-                |]
-            [whamlet|
-                <div ##{fvId titleView}>
-                    <label>#{fvLabel titleView}
-                    ^{fvInput titleView}
-                <div>
-                    Publish on <span ##{fvId dayView}>^{fvInput dayView}
-                    \ at <span ##{fvId timeView}>^{fvInput timeView}
-                <div ##{fvId contentView}>
-                    <div>
-                        ^{fvInput contentView}
-
-            |]
+        widget = $(widgetFile "admin-entry-update-form")
 
     return (res, widget)
 
@@ -88,7 +67,7 @@ titleSettings = FieldSettings
     , fsTooltip = Nothing
     , fsId = Just "title"
     , fsName = Just "title"
-    , fsAttrs = []
+    , fsAttrs = [("placeholder", "Post Title")]
     }
 publishNowSettings = FieldSettings
     { fsLabel = "Publish immediately"
@@ -116,5 +95,5 @@ contentSettings = FieldSettings
     , fsTooltip = Nothing
     , fsId = Just "content"
     , fsName = Just "content"
-    , fsAttrs = []
+    , fsAttrs = [("placeholder", "Post Content")]
     }

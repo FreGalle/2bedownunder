@@ -50,6 +50,7 @@ putAdminEntryR entryId = do
     ((res, entryWidget), enctype) <- runFormPostNoToken $ mUpdateEntryForm $ Just entry
     case res of
         FormSuccess updatedEntry -> do
+            setMessage $ "Post updated successfully"
             runDB $ replace entryId updatedEntry
             return ()
         FormFailure fails -> do

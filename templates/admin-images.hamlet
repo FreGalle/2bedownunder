@@ -1,25 +1,24 @@
 <div .container>
-    <div .row>
-        <h2>
-            Upload more images
-        <div .form-actions>
-            <form method=post enctype=#{Multipart}>
-                <input name=#{imagesName} type=file accept=image/* multiple>
-                <input .btn type=submit value="Upload">
-        $if not $ null images
-            <table #list .table>
-                <tr>
-                    <th>
-                        Image
-                    <th>
-                        Uploaded
-                    <th>
-                        Description
-                    <th>
-                        Overview
-                    <th>
-                        Update
-                    <th>
-                        Delete
-                $forall Entity imageId image <- images
-                    ^{rowWidget imageId image}
+    <h3>
+        Upload more images
+    <div .form-actions>
+        <form method=post enctype=#{Multipart}>
+            <input name=#{imagesName} type=file accept=image/* multiple>
+            <input .btn type=submit value="Upload">
+    $if not $ null images
+        <table #list .table>
+            <tr>
+                <th>
+                    Image
+                <th>
+                    Uploaded
+                <th>
+                    Description
+                <th>
+                    Overview
+                <th>
+                    Update
+                <th>
+                    Delete
+            $forall Entity imageId image <- images
+                ^{rowWidget imageId image}

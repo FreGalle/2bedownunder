@@ -1,0 +1,25 @@
+##{fvId titleView} {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    width: 100%;
+}
+
+#datetime {
+    margin-bottom: 0.5em;
+}
+
+##{fvId dayView} {
+    line-height: 1.5em;
+    width: 10em;
+}
+
+##{fvId timeView} {
+    width: 6em;
+}
+
+##{fvId contentView} {
+    font-size: 1.1em;
+    height: 65vh;
+    max-width: 100%;
+    width: 100%;
+}

@@ -11,7 +11,6 @@ function updatePost() {
     var form = document.getElementById('form');
     var request = new XMLHttpRequest();
     request.onreadystatechange = refresh.bind(this, request);
-    //request.setRequestHeader('Content-Type', 'multipart/form-data');
     request.open('PUT', '@{AdminEntryR entryId}');
     request.send(new FormData(form));
 }

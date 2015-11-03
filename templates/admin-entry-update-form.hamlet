@@ -1,0 +1,7 @@
+<div>
+    ^{fvInput titleView}
+<div #datetime>
+    Publish on <span>^{fvInput dayView}
+    \ at <span>^{fvInput timeView}
+<div>
+    ^{fvInput contentView}
