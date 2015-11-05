@@ -49,7 +49,7 @@ mUpdateEntryForm mEntry _ = do
             (FormSuccess Nothing, FormSuccess Nothing) ->
                 FormSuccess Nothing
 
-            _ -> FormFailure ["This should not happen"]
+            _ -> FormFailure ["Could not parse time and/or date fields"]
         created = FormSuccess (maybe now entryCreated mEntry)
         res = Entry <$> titleRes <*> contentRes <*> posted <*> created
         widget = $(widgetFile "admin-entry-update-form")

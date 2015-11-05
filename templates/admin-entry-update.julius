@@ -62,6 +62,8 @@ images.addEventListener('click', function(event) {
 
             textarea.selectionStart = startPos + imgMarkdown.length;
             textarea.selectionEnd = startPos + imgMarkdown.length;
+
         }
+        event.preventDefault();
     }
 });

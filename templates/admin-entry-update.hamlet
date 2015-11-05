@@ -6,7 +6,8 @@
             <button #delete type=button>Delete
     <div #images>
         $forall Entity imageId image <- images
-            <img .thumbnail
-            data-url=@{ImagesR $ StaticRoute [imageFilename image] []}
-            data-description="#{maybe (Textarea "Insert image caption here") id (imageDescription image)}"
-            src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
+            <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
+                <img .thumbnail
+                data-url=@{ImagesR $ StaticRoute [imageFilename image] []}
+                data-description="#{maybe (Textarea "Insert image caption here") id (imageDescription image)}"
+                src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
