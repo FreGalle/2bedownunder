@@ -28,6 +28,7 @@ library
                      Handler.Admin.Entries
     other-modules:   Helper.Admin
                      Helper.Image
+                     Helper.Entry
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -88,6 +89,7 @@ library
                  , thumbnail-plus                >= 1.0.5      && < 1.1
                  , resourcet                     >= 1.1.6      && < 1.2
                  , time                          >= 1.5.0.1    && < 1.6
+                 , blaze-html                    >= 0.8.1.1    && < 0.9
                  , file-embed
                  , safe
                  , unordered-containers
