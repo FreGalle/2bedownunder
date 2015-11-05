@@ -2,10 +2,9 @@ module Helper.Admin where
 
 import Import
 
-import Text.Markdown (Markdown)
-import Data.Time.Calendar
 import Data.Time.LocalTime
 import Text.Hamlet (hamletFile)
+import Text.Julius (juliusFile)
 import Yesod.Text.Markdown (markdownField)
 
 adminLayout :: Widget -> Handler Html
@@ -15,21 +14,25 @@ adminLayout widget = do
     pc <- widgetToPageContent $(widgetFile "admin-layout")
     withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
-newEntryForm :: Form (Text, Bool, Markdown)
-newEntryForm = renderDivs $ (,,)
-    <$> areq textField titleSettings Nothing
-    <*> areq boolField publishNowSettings Nothing
-    <*> areq markdownField contentSettings Nothing
+newEntryForm :: Html -> MForm Handler (FormResult Entry, Widget)
+newEntryForm = entryForm Nothing
 
-updateEntryForm :: Maybe Entry -> Form (Text, Maybe Day, Maybe TimeOfDay, Markdown)
-updateEntryForm mEntry = renderDivs $ (,,,)
-    <$> areq textField titleSettings (entryTitle <$> mEntry)
-    <*> aopt dayField "Date" (entryDate <$> mEntry)
-    <*> aopt timeFieldTypeTime "Time" (entryTime <$> mEntry)
-    <*> areq markdownField contentSettings (entryContent <$> mEntry)
+newEntryActions :: Widget
+newEntryActions = do
+    toWidget [hamlet|<input #submit type=submit value=Submit>|]
 
-mUpdateEntryForm :: Maybe Entry -> Html -> MForm Handler (FormResult Entry, Widget)
-mUpdateEntryForm mEntry _ = do
+updateEntryActions :: EntryId -> Widget
+updateEntryActions entryId = do
+    toWidget
+        [hamlet|
+            <button #update type=button>Update
+            <button #delete type=button>Delete
+        |]
+    toWidget
+        $(juliusFile "templates/admin-entry-form-update.julius")
+
+entryForm :: Maybe Entry -> Html -> MForm Handler (FormResult Entry, Widget)
+entryForm mEntry _ = do
     (titleRes, titleView)     <- mreq textField titleSettings (entryTitle <$> mEntry)
     (dayRes, dayView)         <- mopt dayField dateSettings (entryDate <$> mEntry)
     (timeRes, timeView)       <- mopt timeFieldTypeTime timeSettings (entryTime <$> mEntry)
@@ -52,7 +55,7 @@ mUpdateEntryForm mEntry _ = do
             _ -> FormFailure ["Could not parse time and/or date fields"]
         created = FormSuccess (maybe now entryCreated mEntry)
         res = Entry <$> titleRes <*> contentRes <*> posted <*> created
-        widget = $(widgetFile "admin-entry-update-form")
+        widget = $(widgetFile "admin-entry-form")
 
     return (res, widget)
 

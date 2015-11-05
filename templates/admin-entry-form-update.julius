@@ -40,30 +40,3 @@ updateEl.addEventListener('click', function() {
     updatePost();
     return false;
 });
-
-var images = document.getElementById('images');
-var textarea = document.getElementById('content');
-images.addEventListener('click', function(event) {
-    var target = event.target;
-
-    if (target.matches('img.thumbnail')) {
-
-        if (textarea.selectionStart || textarea.selectionStart == '0') {
-            var startPos = textarea.selectionStart;
-            var endPos = textarea.selectionEnd;
-
-            var imgMarkdown = "![" + target.dataset.description + "](" + target.dataset.url + ")";
-
-            textarea.value = textarea.value.substring(0, startPos)
-                + imgMarkdown
-                + textarea.value.substring(endPos, textarea.value.length);
-
-            textarea.focus();
-
-            textarea.selectionStart = startPos + imgMarkdown.length;
-            textarea.selectionEnd = startPos + imgMarkdown.length;
-
-        }
-        event.preventDefault();
-    }
-});

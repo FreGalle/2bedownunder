@@ -6,27 +6,28 @@ import Helper.Admin
 getAdminEntriesR :: Handler Html
 getAdminEntriesR = do
     now <- liftIO getCurrentTime
-    published   <- runDB $ selectList [EntryPosted <=. Just now]  [Desc EntryPosted]
+    published   <- runDB $ selectList [EntryPosted <=. Just now] [Desc EntryPosted]
     unpublished <- runDB $ selectList ([EntryPosted >=. Just now] ||. [EntryPosted ==. Nothing]) [Desc EntryPosted, Desc EntryCreated]
     adminLayout $(widgetFile "admin-entries")
 
 getAdminNewEntryR :: Handler Html
 getAdminNewEntryR = do
+    let actionsWidget = newEntryActions
+    thumbsDir <- appThumbsDir <$> getsYesod appSettings
+    images <- runDB $ selectList [] [Desc ImageUploaded]
+
     (entryWidget, enctype) <- generateFormPost newEntryForm
-    adminLayout $(widgetFile "admin-entry-new")
+    adminLayout $(widgetFile "admin-entry")
 
 postAdminNewEntryR :: Handler Html
 postAdminNewEntryR = do
-    ((res, entryWidget), enctype) <- runFormPost newEntryForm
+    ((res, entryWidget), enctype) <- runFormPostNoToken newEntryForm
+    liftIO $ print res
     case res of
-        FormSuccess (title, postNow, content) -> do
-            now <- liftIO getCurrentTime
-            let postTime   = if postNow then Just now else Nothing
-                createTime = now
-            -- Insert the new blog post into the database
-            entryId <- runDB $ insert $ Entry title content postTime createTime
-            -- Go to new blog post
-            if postNow
+        FormSuccess entry -> do
+            entryId <- runDB $ insert $ entry
+            published <- isPublishedNow $ entryPosted entry
+            if published
                 then do
                     msg <- withUrlRenderer [hamlet|Back to <a href=@{AdminEntriesR}>admin overview</a>|]
                     setMessage msg
@@ -34,22 +35,26 @@ postAdminNewEntryR = do
                 -- Go to admin overview
                 else do
                     setMessage "Post created but not yet published"
-                    redirect $ AdminEntriesR
-
-        _ -> adminLayout $(widgetFile "admin-entry-new")
+                    redirect AdminEntriesR
+        _ -> do
+            let actionsWidget = newEntryActions
+            thumbsDir <- appThumbsDir <$> getsYesod appSettings
+            images <- runDB $ selectList [] [Desc ImageUploaded]
+            adminLayout $(widgetFile "admin-entry")
 
 getAdminEntryR :: EntryId -> Handler Html
 getAdminEntryR entryId = do
     entry <- runDB $ get404 entryId
     images <- runDB $ selectList [] [Desc ImageUploaded]
     thumbsDir <- appThumbsDir <$> getsYesod appSettings
-    (entryWidget, enctype) <- generateFormPost $ mUpdateEntryForm $ Just entry
-    adminLayout $(widgetFile "admin-entry-update")
+    (entryWidget, enctype) <- generateFormPost $ entryForm $ Just entry
+    let actionsWidget = updateEntryActions entryId
+    adminLayout $(widgetFile "admin-entry")
 
 putAdminEntryR :: EntryId -> Handler ()
 putAdminEntryR entryId = do
     entry <- runDB $ get404 entryId
-    ((res, entryWidget), enctype) <- runFormPostNoToken $ mUpdateEntryForm $ Just entry
+    ((res, _), _) <- runFormPostNoToken $ entryForm $ Just entry
     case res of
         FormSuccess updatedEntry -> do
             setMessage $ "Post updated successfully"

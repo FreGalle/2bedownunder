@@ -1,9 +1,9 @@
 <div #wrapper>
-    <form #form enctype=#{enctype}>
+    <form #form method=post enctype=#{enctype}>
         ^{entryWidget}
-        <div>
-            <button #update type=button>Update
-            <button #delete type=button>Delete
+        <div .actions>
+            ^{actionsWidget}
+
     <div #images>
         $forall Entity imageId image <- images
             <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
