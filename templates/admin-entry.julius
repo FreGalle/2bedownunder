@@ -15,7 +15,7 @@ images.addEventListener('click', function(event) {
             var imgMarkdown = (newlineAtStart ? '\n' : '');
 
             imgMarkdown += '@@@ ' + target.dataset.description + '\n'
-                + '![' + target.dataset.description + '](' + target.dataset.url + ')' + '\n'
+                + '[![' + target.dataset.description + '](' + target.dataset.url + ')](' + target.dataset.url + ')\n'
                 + '@@@';
 
             if (newlineAtEnd) {

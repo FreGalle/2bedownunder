@@ -22,6 +22,7 @@ myMarkdown (Markdown text) = markdown settings text
             msBlockFilter = noImgPs
         }
         noImgPs (pre : (BlockPara [img@InlineImage {}]:bs)) = pre : BlockPlainText [img]: noImgPs bs
+        noImgPs (pre : (BlockPara [link@(InlineLink _ _ [InlineImage {}])]:bs)) = pre : BlockPlainText [link] : noImgPs bs
         noImgPs (h:hs) = h : noImgPs hs
         noImgPs [] = []
 
