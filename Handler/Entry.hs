@@ -10,9 +10,5 @@ getBlogEntriesR = undefined
 getBlogEntryR :: EntryId -> Handler Html
 getBlogEntryR entryId = do
     entry <- runDB $ get404 entryId
-    let mdMarkup = myMarkdown $ entryContent entry
-    defaultLayout $ do
-        [whamlet|
-<h1>#{entryTitle entry}
-<div>#{mdMarkup}
-|]
+    let contentMarkup = myMarkdown $ entryContent entry
+    defaultLayout $(widgetFile "entry")
