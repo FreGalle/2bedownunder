@@ -18,13 +18,20 @@ myMarkdown :: Markdown -> Html
 myMarkdown (Markdown text) = markdown settings text
     where
         settings = def {
-            msFencedHandlers = figureFenced `Map.union` msFencedHandlers def,
+            msFencedHandlers = fences,
             msBlockFilter = noImgPs
         }
+        fences = figureFenced `Map.union` columnFenced `Map.union` msFencedHandlers def
         noImgPs (pre : (BlockPara [img@InlineImage {}]:bs)) = pre : BlockPlainText [img]: noImgPs bs
         noImgPs (pre : (BlockPara [link@(InlineLink _ _ [InlineImage {}])]:bs)) = pre : BlockPlainText [link] : noImgPs bs
         noImgPs (h:hs) = h : noImgPs hs
         noImgPs [] = []
+
+columnFenced :: Map Text (Text -> FencedHandler)
+columnFenced = htmlFencedHandler
+    "~~~"
+    (\n -> "<div class=\"columns columns-" ++ n ++ "\">")
+    (const "</div>")
 
 figureFenced :: Map Text (Text -> FencedHandler)
 figureFenced = htmlFencedHandler
