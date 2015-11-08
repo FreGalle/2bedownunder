@@ -1,3 +1,4 @@
-<article .post>
-    <h1>#{entryTitle entry}
-    <div>#{contentMarkup}
+<main>
+    <article .post>
+        <h1>#{entryTitle entry}
+        <div .content>#{contentMarkup}
