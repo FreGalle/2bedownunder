@@ -1,60 +1,109 @@
 .post {
 
-    p {
-
-        /*-moz-column-count: 2;
-        -webkit-column-count: 2;
-        column-count: 2;
-        -moz-column-gap: 1em;
-        -webkit-column-gap: 1em;
-        column-gap: 1em;*/
-
-        > img {
-            display: inline-block;
-            margin: 0 auto;
-            /*margin: 0 0 1em;*/
-            width: 100%;
-            max-height: 90vh;
-        }
-    }
-
-    figure {
-        margin: 1em 40px;
-        text-align: center;
+    .content {
 
         img {
-            margin: 0 auto;
+            display: block;
+            box-sizing: border-box;
+            margin: 1em auto;
             max-width: 100%;
             max-height: 90vh;
             height: auto;
-            border: 0;
+
+            padding: 15px 15px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+            -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+            -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+        }
+
+        > p {
+            > img,
+            > a > img {
+                display: initial;
+                float: left;
+                max-width: 40%;
+                height: auto;
+                margin: .5em 1em .5em 0;
+            }
+        }
+
+        figure {
+            margin: 1em 40px;
+            text-align: center;
+
+            img {
+                display: initial;
+                margin: 0 auto;
+            }
+        }
+
+        blockquote {
+          background: #f9f9f9;
+          border-left: 10px solid #ccc;
+          margin: 1.5em 10px;
+          padding: 0.5em 10px;
+          quotes: "\201C""\201D""\2018""\2019";
+        }
+        blockquote:before {
+          color: #ccc;
+          content: open-quote;
+          font-size: 4em;
+          line-height: 0.1em;
+          margin-right: 0.25em;
+          vertical-align: -0.4em;
+        }
+        blockquote:after {
+          color: #ccc;
+          content: close-quote;
+          font-size: 4em;
+          line-height: 0.1em;
+          margin-left: 0.25em;
+          vertical-align: -0.4em;
+        }
+        blockquote p {
+          display: inline;
+        }
+
+        div.columns {
+            img {
+                display: inline-block;
+                margin: .5em 0;
+                width: 100%;
+                max-height: initial;
+            }
+        }
+
+        div.columns-4,
+        div.columns-5 {
+            img {
+                padding: 10px 10px;
+            }
+        }
+
+        div.columns-2 {
+            columns: 2 auto;
+            -moz-columns: 2 auto;
+            -webkit-columns: 2 auto;
+        }
+
+        div.columns-3 {
+            columns: 3 auto;
+            -moz-columns: 3 auto;
+            -webkit-columns: 3 auto;
+        }
+
+        div.columns-4 {
+            columns: 4 auto;
+            -moz-columns: 4 auto;
+            -webkit-columns: 4 auto;
+        }
+
+        div.columns-5 {
+            columns: 5 auto;
+            -moz-columns: 5 auto;
+            -webkit-columns: 5 auto;
         }
     }
 
-    blockquote {
-      background: #f9f9f9;
-      border-left: 10px solid #ccc;
-      margin: 1.5em 10px;
-      padding: 0.5em 10px;
-      quotes: "\201C""\201D""\2018""\2019";
-    }
-    blockquote:before {
-      color: #ccc;
-      content: open-quote;
-      font-size: 4em;
-      line-height: 0.1em;
-      margin-right: 0.25em;
-      vertical-align: -0.4em;
-    }
-    blockquote:after {
-      color: #ccc;
-      content: close-quote;
-      font-size: 4em;
-      line-height: 0.1em;
-      margin-left: 0.25em;
-      vertical-align: -0.4em;
-    }
-    blockquote p {
-      display: inline;
-    }
 }
