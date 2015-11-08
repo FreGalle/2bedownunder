@@ -1,0 +1,18 @@
+@columns : 3;
+@gap: 1em;
+
+.images {
+    -moz-column-count: #{columns};
+    -webkit-column-count: #{columns};
+    column-count: #{columns};
+    -moz-column-gap: #{gap};
+    -webkit-column-gap: #{gap};
+    column-gap: #{gap};
+
+    img {
+        display: inline-block;
+        margin: 0 0 1em;
+        width: 100%;
+    }
+
+}

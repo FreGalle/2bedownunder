@@ -1,0 +1,8 @@
+<main .images>
+    $if null images
+        <span .empty>Not yet, keep refreshing</span>
+    $else
+        $forall Entity imageId image <- images
+            <a .image href=@{ImagesR $ StaticRoute [imageFilename image] []}>
+                <img .thumbnail src=@{ImagesR $ StaticRoute [pack thumbsDir, imageThumbFilename image] []}>
+            $forall Entity imageId image <- images
