@@ -1,8 +1,9 @@
 User
     ident Text
     password Text Maybe
+    name Text
     UniqueUser ident
-    deriving Typeable Show
+    deriving Eq Typeable Show
 
 Entry
     title Text
@@ -10,6 +11,11 @@ Entry
     posted UTCTime Maybe
     created UTCTime default=CURRENT_TIMESTAMP
     deriving Show
+
+Author
+    userId UserId
+    entryId  EntryId
+    UniqueEntryAuthor userId entryId
 
 Image
     filename Text

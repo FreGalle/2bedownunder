@@ -90,6 +90,7 @@ library
                  , resourcet                     >= 1.1.6      && < 1.2
                  , time                          >= 1.5.0.1    && < 1.6
                  , blaze-html                    >= 0.8.1.1    && < 0.9
+                 , esqueleto                     >= 2.4.1      && < 2.5
                  , file-embed
                  , safe
                  , unordered-containers

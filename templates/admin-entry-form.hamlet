@@ -3,5 +3,7 @@
 <div #datetime>
     Publish on <span>^{fvInput dayView}
     \ at <span>^{fvInput timeView}
+<div #authors>
+    Authors: ^{fvInput authorsView}
 <div>
     ^{fvInput contentView}

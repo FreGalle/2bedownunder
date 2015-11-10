@@ -1,5 +1,14 @@
 .post {
 
+    > header {
+        margin: 2.75em 0;
+
+        .details {
+            font-family: 'Lato', sans-serif;
+            color: #AAA;
+        }
+    }
+
     .content {
 
         img {

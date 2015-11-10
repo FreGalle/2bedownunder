@@ -14,12 +14,14 @@ adminLayout widget = do
     pc <- widgetToPageContent $(widgetFile "admin-layout")
     withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
-newEntryForm :: Html -> MForm Handler (FormResult Entry, Widget)
-newEntryForm = entryForm Nothing
+newEntryForm :: Html -> MForm Handler (FormResult (Entry, [UserId]), Widget)
+newEntryForm = entryForm Nothing []
+    -- TODO supply currently logged-in user as single author
 
 newEntryActions :: Widget
 newEntryActions = do
-    toWidget [hamlet|<input #submit type=submit value=Submit>|]
+    toWidget
+        [hamlet|<input #submit type=submit value=Submit>|]
 
 updateEntryActions :: EntryId -> Widget
 updateEntryActions entryId = do
@@ -31,12 +33,14 @@ updateEntryActions entryId = do
     toWidget
         $(juliusFile "templates/admin-entry-form-update.julius")
 
-entryForm :: Maybe Entry -> Html -> MForm Handler (FormResult Entry, Widget)
-entryForm mEntry _ = do
+entryForm :: Maybe Entry -> [UserId] -> Html -> MForm Handler (FormResult (Entry, [UserId]), Widget)
+entryForm mEntry authors _ = do
+    let authorOpts = optionsPersistKey [] [Asc UserName] userName
     (titleRes, titleView)     <- mreq textField titleSettings (entryTitle <$> mEntry)
     (dayRes, dayView)         <- mopt dayField dateSettings (entryDate <$> mEntry)
     (timeRes, timeView)       <- mopt timeFieldTypeTime timeSettings (entryTime <$> mEntry)
     (contentRes, contentView) <- mreq markdownField contentSettings (entryContent <$> mEntry)
+    (authorsRes, authorsView) <- mreq (checkboxesField authorOpts) "Authors" $ Just authors
     now <- liftIO getCurrentTime
 
     let posted = case (dayRes, timeRes) of
@@ -54,7 +58,8 @@ entryForm mEntry _ = do
 
             _ -> FormFailure ["Could not parse time and/or date fields"]
         created = FormSuccess (maybe now entryCreated mEntry)
-        res = Entry <$> titleRes <*> contentRes <*> posted <*> created
+        entry = Entry <$> titleRes <*> contentRes <*> posted <*> created
+        res = (,) <$> entry <*> authorsRes
         widget = $(widgetFile "admin-entry-form")
 
     return (res, widget)
