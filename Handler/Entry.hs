@@ -12,6 +12,7 @@ getBlogEntryR entryId = do
     case entryWithAuthors of
         [] -> notFound
         ((Entity _ entry,_):_) -> do
+            isPublished <- isPublishedNow $ entryPosted entry
             let authors = map (entityVal . snd) entryWithAuthors
                 contentMarkup = myMarkdown $ entryContent entry
             defaultLayout $(widgetFile "entry")

@@ -3,4 +3,9 @@
         <header>
             <h1 .title>#{entryTitle entry}
             <span .details>door #{intercalate ", " (map userName authors)}
-        <div .content>#{contentMarkup}
+        <div .content>
+            $if isPublished
+                #{contentMarkup}
+            $else
+                <div .info>
+                    Nog eventjes geduld, deze post is nog niet helemaal af.
