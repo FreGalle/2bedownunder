@@ -29,6 +29,7 @@ library
     other-modules:   Helper.Admin
                      Helper.Image
                      Helper.Entry
+                     Helper.Locale
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

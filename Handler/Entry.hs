@@ -2,6 +2,7 @@ module Handler.Entry where
 
 import Import
 import Helper.Entry
+import Helper.Locale
 
 getBlogEntriesR :: Handler Html
 getBlogEntriesR = undefined
