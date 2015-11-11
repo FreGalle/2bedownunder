@@ -5,7 +5,7 @@
             ^{actionsWidget}
 
     <div #images>
-        $forall Entity imageId image <- images
+        $forall Entity _ image <- images
             <a href=@{ImagesR $ StaticRoute [imageFilename image] []}>
                 <img .thumbnail
                 data-url=@{ImagesR $ StaticRoute [imageFilename image] []}
