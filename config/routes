@@ -7,11 +7,11 @@
 
 /                     HomeR          GET POST
 
-/admin/images         AdminImagesR   GET POST
-/admin/image/#ImageId AdminImageR    PUT DELETE
-/admin/posts          AdminEntriesR  GET
-/admin/post           AdminNewEntryR GET POST
-/admin/post/#EntryId  AdminEntryR    GET PUT DELETE
+/admin/images         AdminImagesR   GET POST       !admin
+/admin/image/#ImageId AdminImageR    PUT DELETE     !admin
+/admin/posts          AdminEntriesR  GET            !admin
+/admin/post           AdminNewEntryR GET POST       !admin
+/admin/post/#EntryId  AdminEntryR    GET PUT DELETE !admin
 
 /posts                BlogEntriesR   GET
 /post/#EntryId        BlogEntryR     GET
