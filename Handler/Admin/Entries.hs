@@ -80,5 +80,7 @@ putAdminEntryR entryId = do
 
 deleteAdminEntryR :: EntryId -> Handler ()
 deleteAdminEntryR entryId = do
-    runDB $ delete entryId
+    runDB $ do
+        delete entryId
+        deleteWhere [AuthorEntryId ==. entryId]
     setMessage "Post has been deleted"
