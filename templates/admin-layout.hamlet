@@ -3,6 +3,8 @@
     <a href=@{AdminNewEntryR}>New Post
     \<span> | #
     <a href=@{AdminImagesR}>Images
+    \<span> | #
+    <a href=@{AuthR LogoutR}>Logout
 $maybe msg <- mmsg
   <div #message>#{msg}
 ^{widget}
