@@ -64,6 +64,10 @@ h6 {
     font-size: 1.3em;
     line-height: 1.075em;
     margin: 0.25em 0 0.375em;
+
+    a {
+        color: inherit;
+    }
 }
 
 h1 {
@@ -95,11 +99,13 @@ button {
 }
 
 a {
+    color: black;
+    font-weight: bolder;
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
+a:active, a:hover {
+    color: #ec6812;
 }
 
 button {
@@ -120,6 +126,10 @@ button {
 figure {
     text-align: center;
     margin: 1em 0;
+}
+
+figure a {
+    border: none !important;
 }
 
 /**

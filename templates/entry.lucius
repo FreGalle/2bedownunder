@@ -52,14 +52,7 @@
         }
 
         a {
-            color: #428bca;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-            text-decoration-color: #428bca;
-            -webkit-text-decoration-color: #428bca;
+            border-bottom: 1px solid #ccc;
         }
 
         > p {
@@ -208,9 +201,25 @@ article + nav {
         flex-grow: 1;
         text-transform: uppercase;
         box-sizing: border-box;
-        padding-left: 1em;
-        padding-right: 1em;
     	position: relative;
+    }
+
+    .previous .link {
+        margin-left: 0.5em;
+    }
+    .next .link {
+        margin-right: 0.5em;
+    }
+    .previous .link,
+    .next .link {
+        color: inherit;
+        font-weight: inherit;
+        padding: 1em 0.45em 0;
+        border-bottom: 1px solid transparent;
+    }
+    .previous .link:hover,
+    .next .link:hover {
+        border-bottom: 1px solid #ccc;
     }
 
     .previous:not(:empty):after,
