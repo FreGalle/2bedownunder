@@ -39,12 +39,18 @@ tmpThumbFp info = do
     -- Register an action to clean up the temporary image file on completion
     _ <- register $ removeFile tmpFile
     -- Create thumbnails from temporary image
-    thumbs <- TP.createThumbnails def tmpFile
+    thumbs <- TP.createThumbnails thumbConfig tmpFile
     return $ case thumbs of
-        TP.CreatedThumbnails (_:thumb:_) _ ->
+        TP.CreatedThumbnails [thumb] _ ->
             TP.thumbFp thumb
         _ ->
             tmpFile
+
+thumbConfig :: TP.Configuration
+thumbConfig = def
+    { TP.maxFileSize = 5 * 1024 * 1024
+    , TP.reencodeOriginal = TP.Never
+    , TP.thumbnailSizes = [(TP.Size 512 512, Nothing)] }
 
 getTmpFile :: FilePath -> IO FilePath
 getTmpFile filename = liftM (</> filename) getTemporaryDirectory
