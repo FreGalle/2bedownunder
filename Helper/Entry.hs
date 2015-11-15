@@ -6,6 +6,7 @@ module Helper.Entry
 import Import
 
 import qualified Data.Map as Map
+import Data.Char (isLetter)
 import Text.Markdown
     ( Markdown (..)
     , MarkdownSettings (..)
@@ -60,4 +61,8 @@ figureFenced :: Map Text (Text -> FencedHandler)
 figureFenced = htmlFencedHandler
     "@@@"
     (const "<figure>")
-    (\description -> "<figcaption>" ++ description ++ "</figcaption></figure>")
+    (\description -> optCaption description ++ "</figure>")
+        where
+            optCaption d = if any isLetter d
+                then "<figcaption>" ++ d ++ "</figcaption>"
+                else ""
