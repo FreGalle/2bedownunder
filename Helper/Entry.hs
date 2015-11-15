@@ -76,5 +76,5 @@ figureFenced = htmlFencedHandler
     (\description -> optCaption description ++ "</figure>")
         where
             optCaption d = if any isLetter d
-                then "<figcaption>" ++ d ++ "</figcaption>"
+                then "<br><figcaption>" ++ d ++ "</figcaption>"
                 else ""

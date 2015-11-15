@@ -5,9 +5,12 @@
         margin: 2.75em 0;
 
         h1 {
+            padding-left: 0.275em;
+            padding-right: 0.275em;
             border-bottom: 6px solid #eee;
             margin-left: auto;
             margin-right: auto;
+            box-sizing: border-box;
             max-width: 90%;
             word-spacing: .07em;
             letter-spacing: .06em;
@@ -15,7 +18,7 @@
         }
 
         .details {
-            font-family: latolight, helvetica, arial, sans-serif;
+            font-family: "Lato", helvetica, arial, sans-serif;
             color: #AAA;
             padding-left: .25em;
         }
@@ -52,7 +55,7 @@
         > p {
             margin-top: 1.275em;
             margin-bottom: 1.5em;
-            
+
             > img,
             > a > img {
                 display: initial;
@@ -70,6 +73,29 @@
             img {
                 display: initial;
                 margin: 0 auto;
+            }
+
+            figcaption {
+                display: inline-block;
+                max-width: 80%;
+                margin-top: .625em;
+                padding: .425em;
+                font-size: 1.125em;
+                font-family: "Lato", helvetica, sans-serif;
+                opacity: 0.6;
+                border-bottom: 2px solid rgb(236, 104, 18);
+                border-top: 2px solid rgb(236, 104, 18);
+                transition: border-color 0.5s ease-in-out;
+                transition: opacity 0.5s ease-in-out;
+                -webkit-transition: border-color 0.5s ease-in-out;
+                -webkit-transition: opacity 0.5s ease-in-out;
+            }
+        }
+
+        figure:hover {
+            figcaption {
+                border-color: rgba(236, 104, 18, 0.8);
+                opacity: 1;
             }
         }
 
@@ -156,7 +182,7 @@
     h5,
     h6 {
         color: #ec6812;
-        font-family: latolight, helvetica, arial, sans-serif;
+        font-family: "Lato", helvetica, arial, sans-serif;
         font-weight: 300;
         font-size: 1.3em;
         line-height: 1.075em;
