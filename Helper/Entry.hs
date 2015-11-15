@@ -1,12 +1,14 @@
 module Helper.Entry
     ( myMarkdown
     , selectEntryWithAuthors
-    , selectEntryWithAuthorIds ) where
+    , selectEntryWithAuthorIds
+    , selectPreviousNext ) where
 
 import Import
 
 import qualified Data.Map as Map
 import Data.Char (isLetter)
+import Data.List ((!!), elemIndex)
 import Text.Markdown
     ( Markdown (..)
     , MarkdownSettings (..)
@@ -37,6 +39,16 @@ selectEntryWithAuthorIds entryId = do
             E.where_ (entry ^. EntryId E.==. E.val entryId)
             return (entry, entryAuthor ^. AuthorUserId)
     return $ fmap (second E.unValue) selected
+
+selectPreviousNext :: Entry -> Handler (Maybe (Entity Entry), Maybe (Entity Entry))
+selectPreviousNext entry = runDB $ do
+    prev <- selectFirst [EntryPosted <. entryPosted entry] [Desc EntryPosted]
+    nextList <- selectList [EntryPosted >. entryPosted entry] [Asc  EntryPosted]
+
+    nextListPublished <- mapM (isEntryPublishedNow . entityVal) nextList
+    let next = (!!) <$> pure nextList <*> elemIndex True nextListPublished
+
+    return (prev, next)
 
 myMarkdown :: Markdown -> Html
 myMarkdown (Markdown text) = markdown settings text

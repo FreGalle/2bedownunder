@@ -25,6 +25,9 @@ data ImageUpdate = ImageUpdate
     }
 $(deriveJSON defaultOptions ''ImageUpdate)
 
+isEntryPublishedNow :: MonadIO m => Entry -> m Bool
+isEntryPublishedNow = isPublishedNow . entryPosted
+
 isPublishedNow :: MonadIO m => Maybe UTCTime -> m Bool
 isPublishedNow published = case published of
     Nothing -> return False
