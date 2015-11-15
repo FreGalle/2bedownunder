@@ -2,7 +2,7 @@
     <article .post>
         <header>
             <h1 .title>#{entryTitle entry}
-            <span .details>door #{intercalate ", " (map userName authors)}
+            <div .details>door #{intercalate ", " (map userName authors)}
                 $maybe posted <- entryPosted entry
                     \ #{formatTime belgiumLocale "op %x om %X" posted}
         <div .content>
