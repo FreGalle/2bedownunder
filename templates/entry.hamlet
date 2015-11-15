@@ -11,8 +11,14 @@
             $else
                 <div .info>
                     Nog eventjes geduld, deze post is nog niet helemaal af.
-<nav>
-    $maybe Entity prevId prev <- mPrev
-        <a href=@{BlogEntryR prevId}>&lt; #{entryTitle prev}
-    $maybe Entity nextId next <- mNext
-        <a href=@{BlogEntryR nextId}>#{entryTitle next} &gt;
+    <nav>
+        <div .previous>
+            $maybe Entity prevId prev <- mPrev
+                <h4>
+                    <a .link href=@{BlogEntryR prevId}>
+                        #{entryTitle prev}
+        <div .next>
+            $maybe Entity nextId next <- mNext
+                <h4>
+                    <a .link href=@{BlogEntryR nextId}>
+                        #{entryTitle next}
