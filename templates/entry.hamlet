@@ -11,6 +11,7 @@
             $else
                 <div .info>
                     Nog eventjes geduld, deze post is nog niet helemaal af.
+        <div .end>
     <nav>
         <div .previous>
             $maybe Entity prevId prev <- mPrev
