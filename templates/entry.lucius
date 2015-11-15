@@ -1,4 +1,8 @@
+@sansFonts: "Lato", helvetica, arial, sans-serif;
+
 .post {
+
+    margin-bottom: 1.5em;
 
     > header {
         text-align: center;
@@ -18,7 +22,7 @@
         }
 
         .details {
-            font-family: "Lato", helvetica, arial, sans-serif;
+            font-family: #{sansFonts};
             color: #AAA;
             padding-left: .25em;
         }
@@ -81,7 +85,7 @@
                 margin-top: .625em;
                 padding: .425em;
                 font-size: 1.125em;
-                font-family: "Lato", helvetica, sans-serif;
+                font-family: #{sansFonts};
                 opacity: 0.6;
                 border-bottom: 2px solid rgb(236, 104, 18);
                 border-top: 2px solid rgb(236, 104, 18);
@@ -175,30 +179,12 @@
         }
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        color: #ec6812;
-        font-family: "Lato", helvetica, arial, sans-serif;
-        font-weight: 300;
-        font-size: 1.3em;
-        line-height: 1.075em;
-        margin: 0.25em 0 0.375em;
     }
 
-    h1 {
-        font-size: 3.375em;
     }
 
-    h2 {
-        font-size: 2em;
     }
 
-    h3 {
-        font-size: 1.675em;
     }
 
 }
