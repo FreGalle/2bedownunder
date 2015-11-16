@@ -5,7 +5,12 @@ import Helper.Entry
 import Helper.Locale
 
 getBlogEntriesR :: Handler Html
-getBlogEntriesR = undefined
+getBlogEntriesR = do
+    now <- liftIO getCurrentTime
+    mLastPosted <- runDB $ selectFirst [EntryPosted <. Just now] [Desc EntryPosted]
+    case mLastPosted of
+        Nothing -> notFound
+        Just (Entity lastId _) -> getBlogEntryR lastId
 
 getBlogEntryR :: EntryId -> Handler Html
 getBlogEntryR entryId = do
