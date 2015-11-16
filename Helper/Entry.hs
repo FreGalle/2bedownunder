@@ -8,7 +8,6 @@ import Import
 
 import qualified Data.Map as Map
 import Data.Char (isLetter)
-import Data.List ((!!), elemIndex)
 import Text.Markdown
     ( Markdown (..)
     , MarkdownSettings (..)
@@ -42,12 +41,9 @@ selectEntryWithAuthorIds entryId = do
 
 selectPreviousNext :: Entry -> Handler (Maybe (Entity Entry), Maybe (Entity Entry))
 selectPreviousNext entry = runDB $ do
+    now <- liftIO getCurrentTime
     prev <- selectFirst [EntryPosted <. entryPosted entry] [Desc EntryPosted]
-    nextList <- selectList [EntryPosted >. entryPosted entry] [Asc  EntryPosted]
-
-    nextListPublished <- mapM (isEntryPublishedNow . entityVal) nextList
-    let next = (!!) <$> pure nextList <*> elemIndex True nextListPublished
-
+    next <- selectFirst [EntryPosted >. entryPosted entry, EntryPosted <. Just now] [Asc EntryPosted]
     return (prev, next)
 
 myMarkdown :: Markdown -> Html
