@@ -1,0 +1,20 @@
+<main>
+    <div .title>
+        <h1>Blog Posts
+    $forall (mMonthStr, posts) <- grouped
+        $maybe monthStr <- mMonthStr
+            <div .month>
+                <h3 .monthname>
+                    #{monthStr} #
+                    $with postCount <- length posts
+                        <span .postcount>#{postCount} #
+                            $if postCount == 1
+                                post
+                            $else
+                                posts
+                <ul .posts>
+                    $forall Entity eId entry <- posts
+                        <li .post>
+                            <span .posttitle>
+                                <a href=@{BlogEntryR eId}>
+                                    #{entryTitle entry}
