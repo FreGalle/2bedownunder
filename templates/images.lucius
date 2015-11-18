@@ -1,6 +1,10 @@
 @columns: 3;
 @gap: auto;
 
+#main {
+    max-width: 920px;
+}
+
 .images {
 
     margin-top: 2em;
