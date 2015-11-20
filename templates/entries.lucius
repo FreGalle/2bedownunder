@@ -9,7 +9,7 @@
             text-transform: none;
             font-weight: normal;
             font-size: .625em;
-            color: #666;
+            color: #999;
         }
     }
 
@@ -33,6 +33,7 @@
         .post:not(:last-of-type):after {
             content: "\2014";
             color: #999;
+            padding: 0 0.3em;
         }
     }
 }
@@ -44,7 +45,7 @@
 
 .title {
     text-align: center;
-    margin: 2.75em 0 3.75em;
+    margin: 3.25em 0 3.75em;
 
     > h1 {
         padding-left: 0.275em;

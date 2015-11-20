@@ -1,6 +1,6 @@
 <main>
     <div .title>
-        <h1>Blog Posts
+        <h1>2 Belgen Down Under
     $forall (mMonthStr, posts) <- grouped
         $maybe monthStr <- mMonthStr
             <div .month>

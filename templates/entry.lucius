@@ -12,7 +12,7 @@
 
     > header {
         text-align: center;
-        margin: 2.75em 0;
+        margin: 3.25em 0;
 
         h1 {
             padding-left: 0.275em;
@@ -182,7 +182,7 @@
 
 article + nav {
     display: flex;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.875em;
     max-width: 90%;
     margin-left: auto;
     margin-right: auto;
