@@ -1,3 +1,10 @@
+<nav #topnav>
+    <ul>
+        <li>
+            <a href=@{BlogEntriesR}>Blog
+            <span .separator>/
+        <li>
+            <a href=@{BlogImagesR}>Foto's
 $maybe msg <- mmsg
   <div #message>#{msg}
 ^{widget}

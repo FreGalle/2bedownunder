@@ -1,0 +1,37 @@
+#topnav {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.667rem;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+    line-height: 1.75;
+
+    color: #666666;
+
+    padding: 1rem 0 0 0;
+
+    ul {
+        list-style: none;
+
+        li {
+            display: inline;
+            list-style: none;
+
+            a {
+                border-bottom: 1px solid transparent;
+            }
+
+            a:hover {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .separator {
+                padding: 0 1rem;
+                color: rgba(38, 38, 38, 0.4);
+            }
+        }
+    }
+
+}
