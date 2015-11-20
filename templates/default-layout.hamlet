@@ -5,6 +5,11 @@
             <span .separator>/
         <li>
             <a href=@{BlogImagesR}>Foto's
+            $maybe _ <- maid
+                <span .separator>/
+        $maybe _ <- maid
+            <li>
+                <a href=@{AdminEntriesR}>Admin
 $maybe msg <- mmsg
   <div #message>#{msg}
 ^{widget}

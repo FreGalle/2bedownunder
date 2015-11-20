@@ -9,14 +9,12 @@ import Yesod.Text.Markdown (markdownField)
 
 adminLayout :: Widget -> Handler Html
 adminLayout widget = do
-    master <- getYesod
     mmsg <- getMessage
     pc <- widgetToPageContent $(widgetFile "admin-layout")
     withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
 newEntryForm :: Html -> MForm Handler (FormResult (Entry, [UserId]), Widget)
 newEntryForm = entryForm Nothing []
-    -- TODO supply currently logged-in user as single author
 
 newEntryActions :: Widget
 newEntryActions = do
