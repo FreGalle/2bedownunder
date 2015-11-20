@@ -1,5 +1,5 @@
 <main .images>
-    <h1>Foto's
+    <h1>Foto&#39;s
     $if null images
         <span .empty>Not yet, keep refreshing</span>
     $else

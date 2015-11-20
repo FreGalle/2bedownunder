@@ -5,12 +5,16 @@ import Import
 import Data.Time.LocalTime
 import Text.Hamlet (hamletFile)
 import Text.Julius (juliusFile)
+import Text.Lucius (luciusFile)
 import Yesod.Text.Markdown (markdownField)
 
 adminLayout :: Widget -> Handler Html
 adminLayout widget = do
     mmsg <- getMessage
-    pc <- widgetToPageContent $(widgetFile "admin-layout")
+    maid <- maybeAuthId
+    pc <- widgetToPageContent $ do
+        toWidget $(luciusFile "templates/default-layout-wrapper.lucius")
+        $(widgetFile "admin-layout")
     withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
 newEntryForm :: Html -> MForm Handler (FormResult (Entry, [UserId]), Widget)

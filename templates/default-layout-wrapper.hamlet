@@ -9,8 +9,9 @@ $newline never
     <meta charset="UTF-8">
 
     <title>#{pageTitle pc}
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Travel blog from two Belgian guys discovering everything Australia has to offer and more.">
+    <meta name="author" content="Frederik Galle">
+    <meta name="author" content="David De Bolle">
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -25,6 +26,16 @@ $newline never
   <body>
     <div class="container">
       <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href=@{BlogEntriesR}>Blog
+                        <span .separator>/
+                    <li>
+                        <a href=@{BlogImagesR}>Foto&#39;s
+                        <span .separator>/
+                    <li>
+                        <a href=@{AdminEntriesR}>Admin
       <div id="main" role="main">
         ^{pageBody pc}
       <footer>

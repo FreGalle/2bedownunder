@@ -3,6 +3,7 @@ module Foundation where
 import Import.NoFoundation
 import Database.Persist.Sql (ConnectionPool, runSqlPool)
 import Text.Hamlet          (hamletFile)
+import Text.Lucius          (luciusFile)
 import Text.Jasmine         (minifym)
 import Yesod.Auth.HashDB    (authHashDB)
 import Yesod.Auth.Message   (AuthMessage (InvalidLogin))
@@ -68,6 +69,7 @@ instance Yesod App where
 
         pc <- widgetToPageContent $ do
             addStylesheet $ StaticR css_main_css
+            toWidget $(luciusFile "templates/default-layout-wrapper.lucius")
             $(widgetFile "default-layout")
         withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 

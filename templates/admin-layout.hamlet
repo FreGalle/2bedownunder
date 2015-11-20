@@ -1,6 +1,4 @@
 <nav #topnav>
-    <a href=@{HomeR}>Home
-    \<span> | #
     <a href=@{AdminEntriesR}>Posts
     <a href=@{AdminNewEntryR}>New Post
     \<span> | #
