@@ -18,12 +18,16 @@ saveImg info = do
         then return Nothing
         else do
             -- Create temporary thumbnail file
-            tmpThumb <- tmpThumbFp info
-            liftIO $ do
-                -- Save image to disk
-                fileMove info imagePath
-                -- Save thumb to disk
-                copyFile tmpThumb thumbPath
+            tmpThumbs <- tmpThumbFps info
+            --tmpThumb <- tmpThumbFp info
+            liftIO $
+                case tmpThumbs of
+                    (tmpResized:tmpThumb:_) -> do
+                        copyFile tmpResized imagePath
+                        copyFile tmpThumb thumbPath
+                    [] -> do
+                        fileMove info imagePath
+                        fileMove info thumbPath
 
             uploaded <- liftIO getCurrentTime
             let file  = pack $ takeFileName imagePath
@@ -31,8 +35,8 @@ saveImg info = do
             imgId <- runDB $ insert (Image file thumb Nothing uploaded True)
             return (Just imgId)
 
-tmpThumbFp :: MonadResource m => FileInfo -> m FilePath
-tmpThumbFp info = do
+tmpThumbFps :: MonadResource m => FileInfo -> m [FilePath]
+tmpThumbFps info = do
     tmpFile <- liftIO $ getTmpFile $ unpack $ fileName info
     -- Write image file to temporary directory
     fileSource info $$ sinkFile tmpFile
@@ -41,16 +45,17 @@ tmpThumbFp info = do
     -- Create thumbnails from temporary image
     thumbs <- TP.createThumbnails thumbConfig tmpFile
     return $ case thumbs of
-        TP.CreatedThumbnails [thumb] _ ->
-            TP.thumbFp thumb
+        TP.CreatedThumbnails ts _ ->
+            map TP.thumbFp ts
         _ ->
-            tmpFile
+            repeat tmpFile
 
 thumbConfig :: TP.Configuration
 thumbConfig = def
-    { TP.maxFileSize = 5 * 1024 * 1024
+    { TP.maxFileSize = 30 * 1024 * 1024
+    , TP.maxImageSize = TP.Size 10000 10000
     , TP.reencodeOriginal = TP.Never
-    , TP.thumbnailSizes = [(TP.Size 512 512, Nothing)] }
+    , TP.thumbnailSizes = [(TP.Size 1600 1600, Nothing), (TP.Size 512 512, Nothing)] }
 
 getTmpFile :: FilePath -> IO FilePath
 getTmpFile filename = liftM (</> filename) getTemporaryDirectory
