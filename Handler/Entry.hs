@@ -5,10 +5,10 @@ import Helper.Entry
 import Helper.Locale
 import qualified Data.List as L
 
+-- Does not sort the groups that are created
 myGroupBy :: (Ord b) => (a -> b) -> [a] -> [(b, [a])]
 myGroupBy f = map (f . L.head &&& id)
                    . groupBy ((==) `on` f)
-                   . sortBy (compare `on` f)
 
 getBlogEntriesR :: Handler Html
 getBlogEntriesR = do
