@@ -22,8 +22,11 @@ saveImg info = do
             --tmpThumb <- tmpThumbFp info
             liftIO $
                 case tmpThumbs of
-                    (tmpResized:tmpThumb:_) -> do
+                    (tmpThumb:tmpResized:_) -> do
                         copyFile tmpResized imagePath
+                        copyFile tmpThumb thumbPath
+                    [tmpThumb] -> do
+                        fileMove info imagePath
                         copyFile tmpThumb thumbPath
                     [] -> do
                         fileMove info imagePath
@@ -55,7 +58,7 @@ thumbConfig = def
     { TP.maxFileSize = 30 * 1024 * 1024
     , TP.maxImageSize = TP.Size 10000 10000
     , TP.reencodeOriginal = TP.Never
-    , TP.thumbnailSizes = [(TP.Size 1600 1600, Nothing), (TP.Size 512 512, Nothing)] }
+    , TP.thumbnailSizes = [(TP.Size 512 512, Nothing), (TP.Size 1600 1600, Nothing)] }
 
 getTmpFile :: FilePath -> IO FilePath
 getTmpFile filename = liftM (</> filename) getTemporaryDirectory
